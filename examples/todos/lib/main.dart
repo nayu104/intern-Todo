@@ -67,20 +67,29 @@ class Home extends HookConsumerWidget {
         body: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
           children: [
-            const Title(),
-            TextField(
-              key: addTodoKey,
-              controller: newTodoController,
-              decoration: const InputDecoration(
-                labelText: 'What needs to be done?',
-              ),
-              onSubmitted: (value) {
-                ref.read(todoListProvider.notifier).add(value);
-                newTodoController.clear();
-              },
+            Expanded(
+              child:
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      key: addTodoKey,
+                      controller: newTodoController,
+                      decoration: const InputDecoration(
+                        // labelText: 'ここに入力',
+                      ),
+                    ),
+                  ),
+                ElevatedButton(onPressed: (){
+                  final newTodo = newTodoController.text;
+                    ref.read(todoListProvider.notifier).add(newTodo);
+                    newTodoController.clear();
+                }, child: Icon(Icons.add,color: Colors.black))
+                  // ここに他のボタンなどを追加したい場合は続けて書く
+                ],
+              )
             ),
             const SizedBox(height: 42),
-            const Toolbar(),
             if (todos.isNotEmpty) const Divider(height: 0),
             for (var i = 0; i < todos.length; i++) ...[
               if (i > 0) const Divider(height: 0),
@@ -104,96 +113,6 @@ class Home extends HookConsumerWidget {
   }
 }
 
-class Toolbar extends HookConsumerWidget {
-  const Toolbar({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final filter = ref.watch(todoListFilter);
-
-    Color? textColorFor(TodoListFilter value) {
-      return filter == value ? Colors.blue : Colors.black;
-    }
-
-    return Material(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: Text(
-              '${ref.watch(uncompletedTodosCount)} items left',
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-          Tooltip(
-            key: allFilterKey,
-            message: 'All todos',
-            child: TextButton(
-              onPressed: () =>
-                  ref.read(todoListFilter.notifier).state = TodoListFilter.all,
-              style: ButtonStyle(
-                visualDensity: VisualDensity.compact,
-                foregroundColor:
-                    WidgetStatePropertyAll(textColorFor(TodoListFilter.all)),
-              ),
-              child: const Text('All'),
-            ),
-          ),
-          Tooltip(
-            key: activeFilterKey,
-            message: 'Only uncompleted todos',
-            child: TextButton(
-              onPressed: () => ref.read(todoListFilter.notifier).state =
-                  TodoListFilter.active,
-              style: ButtonStyle(
-                visualDensity: VisualDensity.compact,
-                foregroundColor: WidgetStatePropertyAll(
-                  textColorFor(TodoListFilter.active),
-                ),
-              ),
-              child: const Text('Active'),
-            ),
-          ),
-          Tooltip(
-            key: completedFilterKey,
-            message: 'Only completed todos',
-            child: TextButton(
-              onPressed: () => ref.read(todoListFilter.notifier).state =
-                  TodoListFilter.completed,
-              style: ButtonStyle(
-                visualDensity: VisualDensity.compact,
-                foregroundColor: WidgetStatePropertyAll(
-                  textColorFor(TodoListFilter.completed),
-                ),
-              ),
-              child: const Text('Completed'),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class Title extends StatelessWidget {
-  const Title({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Text(
-      'todos',
-      textAlign: TextAlign.center,
-      style: TextStyle(
-        color: Color.fromARGB(38, 47, 47, 247),
-        fontSize: 100,
-        fontWeight: FontWeight.w100,
-        fontFamily: 'Helvetica Neue',
-      ),
-    );
-  }
-}
 
 final _currentTodo = Provider<Todo>(
   dependencies: const [],
@@ -214,8 +133,6 @@ class TodoItem extends HookConsumerWidget {
     final textFieldFocusNode = useFocusNode();
 
     return Material(
-      color: Colors.white,
-      elevation: 6,
       child: Focus(
         focusNode: itemFocusNode,
         onFocusChange: (focused) {
@@ -233,7 +150,7 @@ class TodoItem extends HookConsumerWidget {
             itemFocusNode.requestFocus();
             textFieldFocusNode.requestFocus();
           },
-          leading: Checkbox(
+          trailing:Checkbox(
             value: todo.completed,
             onChanged: (value) =>
                 ref.read(todoListProvider.notifier).toggle(todo.id),
