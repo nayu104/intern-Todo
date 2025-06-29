@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
+import 'todo_list.dart';
 import 'todo.dart';
 
 /// Some keys used for testing
@@ -68,29 +68,27 @@ class Home extends HookConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
           children: [
             Expanded(
-              child:
-              Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      key: addTodoKey,
-                      controller: newTodoController,
-                      decoration: const InputDecoration(
-                        // labelText: 'ここに入力',
-                      ),
-                    ),
+                child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    key: addTodoKey,
+                    controller: newTodoController,
+                    decoration: const InputDecoration(
+                        ),
                   ),
-                ElevatedButton(onPressed: (){
-                  final newTodo = newTodoController.text;
-                    ref.read(todoListProvider.notifier).add(newTodo);
-                    newTodoController.clear();
-                }, child: Icon(Icons.add,color: Colors.black))
-                  // ここに他のボタンなどを追加したい場合は続けて書く
-                ],
-              )
-            ),
-            const SizedBox(height: 42),
-            if (todos.isNotEmpty) const Divider(height: 0),
+                ),
+                ElevatedButton(
+                    onPressed: () {
+                      final newTodo = newTodoController.text;
+                      ref.read(todoListProvider.notifier).add(newTodo);
+                      newTodoController.clear();
+                    },
+                    child: Icon(Icons.add, color: Colors.black))
+                // ここに他のボタンなどを追加したい場合は続けて書く
+              ],
+            )),
+            const SizedBox(height: 20),
             for (var i = 0; i < todos.length; i++) ...[
               if (i > 0) const Divider(height: 0),
               Dismissible(
@@ -116,10 +114,9 @@ class Home extends HookConsumerWidget {
 
 final _currentTodo = Provider<Todo>(
   dependencies: const [],
-  (ref) => throw UnimplementedError(),
+      (ref) => throw UnimplementedError(),
 );
 
-/// The widget that that displays the components of an individual Todo Item
 class TodoItem extends HookConsumerWidget {
   const TodoItem({super.key});
 
@@ -139,7 +136,6 @@ class TodoItem extends HookConsumerWidget {
           if (focused) {
             textEditingController.text = todo.description;
           } else {
-            // Commit changes only when the textfield is unfocused, for performance
             ref
                 .read(todoListProvider.notifier)
                 .edit(id: todo.id, description: textEditingController.text);
@@ -150,24 +146,37 @@ class TodoItem extends HookConsumerWidget {
             itemFocusNode.requestFocus();
             textFieldFocusNode.requestFocus();
           },
-          trailing:Checkbox(
+          trailing: Checkbox(
             value: todo.completed,
             onChanged: (value) =>
                 ref.read(todoListProvider.notifier).toggle(todo.id),
           ),
           title: itemIsFocused
               ? TextField(
-                  autofocus: true,
-                  focusNode: textFieldFocusNode,
-                  controller: textEditingController,
-                )
-              : Text(todo.description),
+            autofocus: true,
+            focusNode: textFieldFocusNode,
+            controller: textEditingController,
+          )
+
+          // 年月日を「2025年06月28日」のように0埋めして表示
+          //TODO: 条件分岐を「.padLeft(2, '0')」に書き換える & 年月日の文字を小さくする。
+          //TODO: 提案「descriptionと年月日をColumnで並べて、年月日だけstyleを変更する」
+          //TODO: 「時間」と「日」の間に空白を置く
+              : Text('${todo.description}\n'
+              '${todo.createdAt.year}年'
+              '${todo.createdAt.month < 10 ? '0${todo.createdAt.month}' : todo.createdAt.month}月'
+              '${todo.createdAt.day < 10 ? '0${todo.createdAt.day}' : todo.createdAt.day}日'
+              '${todo.createdAt.hour < 10 ? '0${todo.createdAt.hour}' : todo.createdAt.hour}'
+              ':'
+              '${todo.createdAt.minute < 10 ? '0${todo.createdAt.minute}' : todo.createdAt.minute}'
+          ),
         ),
       ),
     );
   }
 }
 
+// TextField などが選択されているかどうかの判定に使う。編集モード or テキストモードの切り替え
 bool useIsFocused(FocusNode node) {
   final isFocused = useState(node.hasFocus);
 

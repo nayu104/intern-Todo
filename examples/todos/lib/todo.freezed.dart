@@ -19,6 +19,7 @@ mixin _$Todo {
   String get id => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
   bool get completed => throw _privateConstructorUsedError;
+  DateTime get createdAt => throw _privateConstructorUsedError;
 
   /// Create a copy of Todo
   /// with the given fields replaced by the non-null parameter values.
@@ -31,7 +32,8 @@ abstract class $TodoCopyWith<$Res> {
   factory $TodoCopyWith(Todo value, $Res Function(Todo) then) =
       _$TodoCopyWithImpl<$Res, Todo>;
   @useResult
-  $Res call({String id, String description, bool completed});
+  $Res call(
+      {String id, String description, bool completed, DateTime createdAt});
 }
 
 /// @nodoc
@@ -52,6 +54,7 @@ class _$TodoCopyWithImpl<$Res, $Val extends Todo>
     Object? id = null,
     Object? description = null,
     Object? completed = null,
+    Object? createdAt = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -66,6 +69,10 @@ class _$TodoCopyWithImpl<$Res, $Val extends Todo>
           ? _value.completed
           : completed // ignore: cast_nullable_to_non_nullable
               as bool,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ) as $Val);
   }
 }
@@ -77,7 +84,8 @@ abstract class _$$TodoImplCopyWith<$Res> implements $TodoCopyWith<$Res> {
       __$$TodoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String description, bool completed});
+  $Res call(
+      {String id, String description, bool completed, DateTime createdAt});
 }
 
 /// @nodoc
@@ -95,6 +103,7 @@ class __$$TodoImplCopyWithImpl<$Res>
     Object? id = null,
     Object? description = null,
     Object? completed = null,
+    Object? createdAt = null,
   }) {
     return _then(_$TodoImpl(
       id: null == id
@@ -109,6 +118,10 @@ class __$$TodoImplCopyWithImpl<$Res>
           ? _value.completed
           : completed // ignore: cast_nullable_to_non_nullable
               as bool,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
@@ -117,7 +130,10 @@ class __$$TodoImplCopyWithImpl<$Res>
 
 class _$TodoImpl implements _Todo {
   const _$TodoImpl(
-      {required this.id, required this.description, this.completed = false});
+      {required this.id,
+      required this.description,
+      this.completed = false,
+      required this.createdAt});
 
   @override
   final String id;
@@ -126,10 +142,12 @@ class _$TodoImpl implements _Todo {
   @override
   @JsonKey()
   final bool completed;
+  @override
+  final DateTime createdAt;
 
   @override
   String toString() {
-    return 'Todo(id: $id, description: $description, completed: $completed)';
+    return 'Todo(id: $id, description: $description, completed: $completed, createdAt: $createdAt)';
   }
 
   @override
@@ -141,11 +159,14 @@ class _$TodoImpl implements _Todo {
             (identical(other.description, description) ||
                 other.description == description) &&
             (identical(other.completed, completed) ||
-                other.completed == completed));
+                other.completed == completed) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, description, completed);
+  int get hashCode =>
+      Object.hash(runtimeType, id, description, completed, createdAt);
 
   /// Create a copy of Todo
   /// with the given fields replaced by the non-null parameter values.
@@ -160,7 +181,8 @@ abstract class _Todo implements Todo {
   const factory _Todo(
       {required final String id,
       required final String description,
-      final bool completed}) = _$TodoImpl;
+      final bool completed,
+      required final DateTime createdAt}) = _$TodoImpl;
 
   @override
   String get id;
@@ -168,6 +190,8 @@ abstract class _Todo implements Todo {
   String get description;
   @override
   bool get completed;
+  @override
+  DateTime get createdAt;
 
   /// Create a copy of Todo
   /// with the given fields replaced by the non-null parameter values.
