@@ -19,7 +19,6 @@ const thirdItemText = 'Have a walk';
 
 void main() {
   final addTodoInput = find.byKey(addTodoKey);
-  final activeFilterButton = find.byKey(activeFilterKey);
   final firstItem = find.byKey(const Key('todo-0'));
   final firstCheckbox = find.descendant(
     of: firstItem,
@@ -173,7 +172,6 @@ void main() {
     expect(thirdItem, findsOneWidget);
 
     await tester.tap(firstCheckbox);
-    await tester.tap(activeFilterButton);
 
     await tester.pump();
 

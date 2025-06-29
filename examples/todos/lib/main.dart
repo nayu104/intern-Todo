@@ -6,37 +6,8 @@ import 'todo.dart';
 
 /// Some keys used for testing
 final addTodoKey = UniqueKey();
-final activeFilterKey = UniqueKey();
-final completedFilterKey = UniqueKey();
-final allFilterKey = UniqueKey();
 
 final todoListProvider = NotifierProvider<TodoList, List<Todo>>(TodoList.new);
-
-enum TodoListFilter {
-  all,
-  active,
-  completed,
-}
-
-final todoListFilter = StateProvider((_) => TodoListFilter.all);
-
-final uncompletedTodosCount = Provider<int>((ref) {
-  return ref.watch(todoListProvider).where((todo) => !todo.completed).length;
-});
-
-final filteredTodos = Provider<List<Todo>>((ref) {
-  final filter = ref.watch(todoListFilter);
-  final todos = ref.watch(todoListProvider);
-
-  switch (filter) {
-    case TodoListFilter.completed:
-      return todos.where((todo) => todo.completed).toList();
-    case TodoListFilter.active:
-      return todos.where((todo) => !todo.completed).toList();
-    case TodoListFilter.all:
-      return todos;
-  }
-});
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -58,7 +29,7 @@ class Home extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final todos = ref.watch(filteredTodos);
+    final todos = ref.watch(todoListProvider);
     final newTodoController = useTextEditingController();
 
     return GestureDetector(
@@ -157,19 +128,30 @@ class TodoItem extends HookConsumerWidget {
             focusNode: textFieldFocusNode,
             controller: textEditingController,
           )
-
-          // 年月日を「2025年06月28日」のように0埋めして表示
-          //TODO: 条件分岐を「.padLeft(2, '0')」に書き換える & 年月日の文字を小さくする。
-          //TODO: 提案「descriptionと年月日をColumnで並べて、年月日だけstyleを変更する」
-          //TODO: 「時間」と「日」の間に空白を置く
-              : Text('${todo.description}\n'
-              '${todo.createdAt.year}年'
-              '${todo.createdAt.month < 10 ? '0${todo.createdAt.month}' : todo.createdAt.month}月'
-              '${todo.createdAt.day < 10 ? '0${todo.createdAt.day}' : todo.createdAt.day}日'
-              '${todo.createdAt.hour < 10 ? '0${todo.createdAt.hour}' : todo.createdAt.hour}'
-              ':'
-              '${todo.createdAt.minute < 10 ? '0${todo.createdAt.minute}' : todo.createdAt.minute}'
+          //　年月日を「2025年06月28日」のように0埋めして表示
+              :Column(
+            crossAxisAlignment: CrossAxisAlignment.start, //  左寄せ
+            children: [
+              Text(todo.description),
+              SizedBox(height: 5),
+              Row( //　Rowを使う理由：月日と時刻の間に横スペース（SizedBox）を設けたいため。
+                children: [
+              Text('${todo.createdAt.year}年'
+                  '${todo.createdAt.month.toString().padLeft(2, '0')}月'
+                  '${todo.createdAt.day.toString().padLeft(2, '0')}日',
+                style: TextStyle(fontSize: 13),
+              ),
+              SizedBox(width: 5),
+              Text('${todo.createdAt.hour.toString().padLeft(2, '0')}'
+                  ':'
+                  '${todo.createdAt.minute.toString().padLeft(2, '0')}',
+                style: TextStyle(fontSize: 13),
+              ),
+            ],
+              ),
+            ],
           ),
+
         ),
       ),
     );
