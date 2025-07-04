@@ -5,8 +5,6 @@ import 'todo.dart';
 const _uuid = Uuid();
 
 class TodoList extends Notifier<List<Todo>> {
-
-
   @override
   List<Todo> build() => [];
 
@@ -26,10 +24,7 @@ class TodoList extends Notifier<List<Todo>> {
   void toggle(String id) {
     state = [
       for (final todo in state)
-        if (todo.id == id)
-          todo.copyWith(completed: !todo.completed)
-        else
-          todo,
+        if (todo.id == id) todo.copyWith(completed: !todo.completed) else todo,
     ];
   }
 
@@ -37,13 +32,9 @@ class TodoList extends Notifier<List<Todo>> {
   void edit({required String id, required String description}) {
     state = [
       for (final todo in state)
-        if (todo.id == id)
-          todo.copyWith(description: description)
-        else
-          todo,
+        if (todo.id == id) todo.copyWith(description: description) else todo,
     ];
   }
-
 
   void remove(Todo target) {
     state = state.where((todo) => todo.id != target.id).toList();
