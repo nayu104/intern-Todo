@@ -5,6 +5,7 @@ import 'todo_list.dart';
 final todoListProvider = NotifierProvider<TodoList, List<Todo>>(TodoList.new);
 
 final currentTodo = Provider<Todo>(
+  //これがあるとバケツリレーしなくてよくなる
   dependencies: const [],
-  (ref) => throw UnimplementedError(),
+  (ref) => throw UnimplementedError(), //override して使う（つまり 仮置き）
 );

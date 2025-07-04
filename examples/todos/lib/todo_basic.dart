@@ -20,12 +20,12 @@ class TodoBasic extends HookConsumerWidget {
         appBar: AppBar(
           backgroundColor: Colors.blue,
           foregroundColor: Colors.white,
-        leading: IconButton(
-        icon: Icon(Icons.arrow_back_ios),
-    onPressed: () {
-      Navigator.pop(context);
-    },
-    ),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
         ),
         body: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
@@ -58,11 +58,12 @@ class TodoBasic extends HookConsumerWidget {
                 onDismissed: (_) {
                   ref.read(todoListProvider.notifier).remove(todos[i]);
                 },
+                //（引数）で渡す代わりに、Provider（currentTodo）を使ってTodoItemにデータを渡している
                 child: ProviderScope(
                   overrides: [
                     currentTodo.overrideWithValue(todos[i]),
                   ],
-                  child: const TodoItem(),
+                  child: const TodoItem(), //実際の表示・UIはTodoItemが担当
                 ),
               ),
             ],

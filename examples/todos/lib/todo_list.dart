@@ -1,4 +1,4 @@
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart'; //state,Notifierが使える
 import 'package:uuid/uuid.dart';
 import 'todo.dart';
 
