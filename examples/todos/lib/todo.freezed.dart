@@ -20,9 +20,9 @@ Todo _$TodoFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Todo {
-  String get id => throw _privateConstructorUsedError;
-  String get description => throw _privateConstructorUsedError;
-  bool get completed => throw _privateConstructorUsedError;
+  String get todoId => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
+  bool get isCompleted => throw _privateConstructorUsedError;
   @DateTimeTimestampConverter()
   DateTime get createdAt => throw _privateConstructorUsedError;
 
@@ -41,9 +41,9 @@ abstract class $TodoCopyWith<$Res> {
       _$TodoCopyWithImpl<$Res, Todo>;
   @useResult
   $Res call(
-      {String id,
-      String description,
-      bool completed,
+      {String todoId,
+      String title,
+      bool isCompleted,
       @DateTimeTimestampConverter() DateTime createdAt});
 }
 
@@ -62,23 +62,23 @@ class _$TodoCopyWithImpl<$Res, $Val extends Todo>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? description = null,
-    Object? completed = null,
+    Object? todoId = null,
+    Object? title = null,
+    Object? isCompleted = null,
     Object? createdAt = null,
   }) {
     return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
+      todoId: null == todoId
+          ? _value.todoId
+          : todoId // ignore: cast_nullable_to_non_nullable
               as String,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
               as String,
-      completed: null == completed
-          ? _value.completed
-          : completed // ignore: cast_nullable_to_non_nullable
+      isCompleted: null == isCompleted
+          ? _value.isCompleted
+          : isCompleted // ignore: cast_nullable_to_non_nullable
               as bool,
       createdAt: null == createdAt
           ? _value.createdAt
@@ -96,9 +96,9 @@ abstract class _$$TodoImplCopyWith<$Res> implements $TodoCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String id,
-      String description,
-      bool completed,
+      {String todoId,
+      String title,
+      bool isCompleted,
       @DateTimeTimestampConverter() DateTime createdAt});
 }
 
@@ -114,23 +114,23 @@ class __$$TodoImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? description = null,
-    Object? completed = null,
+    Object? todoId = null,
+    Object? title = null,
+    Object? isCompleted = null,
     Object? createdAt = null,
   }) {
     return _then(_$TodoImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
+      todoId: null == todoId
+          ? _value.todoId
+          : todoId // ignore: cast_nullable_to_non_nullable
               as String,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
               as String,
-      completed: null == completed
-          ? _value.completed
-          : completed // ignore: cast_nullable_to_non_nullable
+      isCompleted: null == isCompleted
+          ? _value.isCompleted
+          : isCompleted // ignore: cast_nullable_to_non_nullable
               as bool,
       createdAt: null == createdAt
           ? _value.createdAt
@@ -144,28 +144,28 @@ class __$$TodoImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$TodoImpl implements _Todo {
   const _$TodoImpl(
-      {required this.id,
-      required this.description,
-      this.completed = false,
+      {required this.todoId,
+      required this.title,
+      this.isCompleted = false,
       @DateTimeTimestampConverter() required this.createdAt});
 
   factory _$TodoImpl.fromJson(Map<String, dynamic> json) =>
       _$$TodoImplFromJson(json);
 
   @override
-  final String id;
+  final String todoId;
   @override
-  final String description;
+  final String title;
   @override
   @JsonKey()
-  final bool completed;
+  final bool isCompleted;
   @override
   @DateTimeTimestampConverter()
   final DateTime createdAt;
 
   @override
   String toString() {
-    return 'Todo(id: $id, description: $description, completed: $completed, createdAt: $createdAt)';
+    return 'Todo(todoId: $todoId, title: $title, isCompleted: $isCompleted, createdAt: $createdAt)';
   }
 
   @override
@@ -173,11 +173,10 @@ class _$TodoImpl implements _Todo {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TodoImpl &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
-            (identical(other.completed, completed) ||
-                other.completed == completed) &&
+            (identical(other.todoId, todoId) || other.todoId == todoId) &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.isCompleted, isCompleted) ||
+                other.isCompleted == isCompleted) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt));
   }
@@ -185,7 +184,7 @@ class _$TodoImpl implements _Todo {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, description, completed, createdAt);
+      Object.hash(runtimeType, todoId, title, isCompleted, createdAt);
 
   /// Create a copy of Todo
   /// with the given fields replaced by the non-null parameter values.
@@ -205,20 +204,20 @@ class _$TodoImpl implements _Todo {
 
 abstract class _Todo implements Todo {
   const factory _Todo(
-          {required final String id,
-          required final String description,
-          final bool completed,
+          {required final String todoId,
+          required final String title,
+          final bool isCompleted,
           @DateTimeTimestampConverter() required final DateTime createdAt}) =
       _$TodoImpl;
 
   factory _Todo.fromJson(Map<String, dynamic> json) = _$TodoImpl.fromJson;
 
   @override
-  String get id;
+  String get todoId;
   @override
-  String get description;
+  String get title;
   @override
-  bool get completed;
+  bool get isCompleted;
   @override
   @DateTimeTimestampConverter()
   DateTime get createdAt;

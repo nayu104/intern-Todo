@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'todo_provider.dart';
+import '../../todo_provider.dart';
 import 'todo_item.dart';
-import 'app_keys.dart';
+import '../../app_keys.dart';
 
 class TodoBasic extends HookConsumerWidget {
   const TodoBasic({super.key});
@@ -54,7 +54,7 @@ class TodoBasic extends HookConsumerWidget {
             for (var i = 0; i < todos.length; i++) ...[
               if (i > 0) const Divider(height: 0),
               Dismissible(
-                key: ValueKey(todos[i].id),
+                key: ValueKey(todos[i].todoId),
                 onDismissed: (_) {
                   ref.read(todoListProvider.notifier).remove(todos[i]);
                 },

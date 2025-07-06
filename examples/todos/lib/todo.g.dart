@@ -7,18 +7,18 @@ part of 'todo.dart';
 // **************************************************************************
 
 _$TodoImpl _$$TodoImplFromJson(Map<String, dynamic> json) => _$TodoImpl(
-      id: json['id'] as String,
-      description: json['description'] as String,
-      completed: json['completed'] as bool? ?? false,
+      todoId: json['todoId'] as String,
+      title: json['title'] as String,
+      isCompleted: json['isCompleted'] as bool? ?? false,
       createdAt: const DateTimeTimestampConverter()
           .fromJson(json['createdAt'] as Timestamp),
     );
 
 Map<String, dynamic> _$$TodoImplToJson(_$TodoImpl instance) =>
     <String, dynamic>{
-      'id': instance.id,
-      'description': instance.description,
-      'completed': instance.completed,
+      'todoId': instance.todoId,
+      'title': instance.title,
+      'isCompleted': instance.isCompleted,
       'createdAt':
           const DateTimeTimestampConverter().toJson(instance.createdAt),
     };

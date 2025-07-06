@@ -11,13 +11,11 @@ part 'todo.g.dart';
 @freezed
 class Todo with _$Todo {
   const factory Todo({
-    required String id,
-    required String description,
-    @Default(false) bool completed,
+    required String todoId,
+    required String title,
+    @Default(false) bool isCompleted,
     @DateTimeTimestampConverter() required DateTime createdAt,
   }) = _Todo;
 
-
-//JSON → クラス
   factory Todo.fromJson(Map<String, dynamic> json) => _$TodoFromJson(json);
 }
