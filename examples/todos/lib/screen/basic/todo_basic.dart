@@ -41,12 +41,19 @@ class TodoBasic extends HookConsumerWidget {
                   ),
                 ),
                 ElevatedButton(
-                    onPressed: () {
-                      final newTodo = newTodoController.text;
-                      ref.read(todoListProvider.notifier).add(newTodo);
-                      newTodoController.clear();
-                    },
-                    child: Icon(Icons.add, color: Colors.black))
+                  onPressed: () {
+                    final newTodo = newTodoController.text;
+                    ref.read(todoListProvider.notifier).add(newTodo);
+                    newTodoController.clear();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  child: Icon(Icons.add, color: Colors.white),
+                )
                 // ここに他のボタンなどを追加したい場合は続けて書く
               ],
             )),
@@ -58,6 +65,11 @@ class TodoBasic extends HookConsumerWidget {
                 onDismissed: (_) {
                   ref.read(todoListProvider.notifier).remove(todos[i]);
                 },
+                background: Container(
+                  color: Colors.red,
+                  alignment: Alignment.center,
+                  child: const Icon(Icons.delete, color: Colors.white),
+                ),
                 //（引数）で渡す代わりに、Provider（currentTodo）を使ってTodoItemにデータを渡している
                 child: ProviderScope(
                   overrides: [

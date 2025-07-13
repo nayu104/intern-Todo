@@ -66,7 +66,13 @@ class TodoFirestore extends HookConsumerWidget {
                           reloadTodos(); // 追加後に再取得
                         }
                       },
-                      child: const Icon(Icons.add, color: Colors.black),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      child: const Icon(Icons.add, color: Colors.white),
                     ),
                   ],
                 ),
@@ -79,8 +85,14 @@ class TodoFirestore extends HookConsumerWidget {
                     onDismissed: (_) async {
                       await TodoFirestoreRepository()
                           .deleteTodo(todos[i].todoId);
+                      todos.removeAt(i); // リストから削除
                       reloadTodos(); // 削除後に再取得
                     },
+                    background: Container(
+                      color: Colors.red,
+                      alignment: Alignment.center,
+                      child: const Icon(Icons.delete, color: Colors.white),
+                    ),
                     child: ProviderScope(
                       overrides: [
                         currentTodo.overrideWithValue(todos[i]),

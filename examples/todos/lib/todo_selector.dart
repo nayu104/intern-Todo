@@ -9,6 +9,12 @@ class TodoSelector extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Todo Page'),
+        centerTitle: true,
+        backgroundColor: Colors.blue,
+        foregroundColor: Colors.white,
+      ),
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -18,14 +24,31 @@ class TodoSelector extends ConsumerWidget {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => TodoBasic()));
               },
-              child: Text("ベーシック"),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                minimumSize: Size(132, 40), // 幅200、高さ50に固定
+              ),
+              child: Text("ベーシック", style: TextStyle(color: Colors.white)),
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => TodoFirestore()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute<TodoFirestore>(
+                        builder: (context) => TodoFirestore()));
               },
-              child: Text("from firestore"),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                minimumSize: Size(100, 40), // 幅200、高さ50に固定
+              ),
+              child:
+                  Text("from firestore", style: TextStyle(color: Colors.white)),
             ),
           ],
         ),
